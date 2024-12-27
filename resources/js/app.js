@@ -1,7 +1,11 @@
 import './bootstrap';
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm.js';
+import humanDate from "../../vendor/matildevoldsen/wire-comments/resources/js/directives/humanDate.js";
 
-import Alpine from 'alpinejs';
+Alpine.directive('humanDate', humanDate);
 
-window.Alpine = Alpine;
+Livewire.start();
 
-Alpine.start();
+// window.Alpine = Alpine;
+
+// Alpine.start();

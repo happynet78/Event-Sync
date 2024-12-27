@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
-    use App\Livewire\Pages\Home;
-    use Illuminate\Support\Facades\Route;
+use App\Livewire\Pages\Article;
+use App\Livewire\Pages\Home;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
+Route::get('/articles/{article:slug}', Article::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

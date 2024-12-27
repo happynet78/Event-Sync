@@ -4,12 +4,19 @@ namespace App\Livewire\Pages;
 
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use App\Models\Article;
 
 class Home extends Component
 {
-    #[Layout('layouts.app')]
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    public $articles;
+
+    public function mount(): void
     {
-        return view('livewire.pages.home');
+        $this->articles = Article::limit(8)->get();
+    }
+    #[Layout('layouts.app')]
+    public function render()
+    {
+        return view('livewire.pages.home')->layout('layouts.app');
     }
 }
