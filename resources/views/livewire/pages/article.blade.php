@@ -6,8 +6,13 @@
 
                 <img class="rounded-md" src="/storage/{{ $article->image->path }}" alt="{{  $article->image->alt_text }}"/>
 
-                {!! $article?->content !!}
+                {!! tiptap_converter()->asHTML($article?->content ?? '', toc: true, maxDepth: 4) !!}
 
+                @foreach($article->categories as $category)
+                    <a href="{{ route('category.show', $category) }}" wire:navigate>
+                        <x-mary-badge value="{{ $category->title }}" class="badge badge-primary" />
+                    </a>
+                @endforeach
             </article>
         </div>
     </div>

@@ -17,6 +17,6 @@ class Home extends Component
     #[Layout('layouts.app')]
     public function render()
     {
-        return view('livewire.pages.home')->layout('layouts.app');
+        return view('livewire.pages.home');
     }
 }

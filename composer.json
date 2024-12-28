@@ -14,13 +14,16 @@
         "laravel/framework": "^11.31",
         "laravel/jetstream": "^5.3",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0",
         "livewire/volt": "^1.6",
         "matildevoldsen/wire-comments": "^0.5.1",
         "matildevoldsen/wire-content": "@dev",
         "omnia-digital/livewire-calendar": "^3.1",
+        "owenvoke/blade-fontawesome": "^2.8",
         "robsontenorio/mary": "^1.41",
+        "spatie/shiki-php": "^2.2",
         "vendor_slug/package_slug": "^1.1"
     },
     "require-dev": {
