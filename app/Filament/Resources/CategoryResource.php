@@ -13,9 +13,11 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use FilamentTiptapEditor\Enums\TiptapOutput;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use RalphJSmit\Filament\SEO\SEO;
 
 class CategoryResource extends Resource
 {
@@ -27,16 +29,25 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')->required(),
-                Slug::make('slug')->required(),
-                TiptapEditor::make('content')->required(),
-                CuratorPicker::make('media_id'),
-                Forms\Components\ColorPicker::make('text_color'),
-                Forms\Components\ColorPicker::make('background_color'),
-                Forms\Components\Toggle::make('is_tag'),
-                Forms\Components\Select::make('parent_id')->searchable()->relationship('parent', 'title'),
-                Forms\Components\Hidden::make('user_id')->dehydrateStateUsing(fn ($state) => auth()->id())
-            ]);
+                Forms\Components\Tabs::make()->schema([
+                    Forms\Components\Tabs\Tab::make('Content')->schema([
+                        Forms\Components\TextInput::make('title')->required(),
+                        Slug::make('slug')->required(),
+                        TiptapEditor::make('content')
+                            ->output(TiptapOutput::Json)
+                            ->required(),
+                        CuratorPicker::make('media_id'),
+                        Forms\Components\ColorPicker::make('text_color'),
+                        Forms\Components\ColorPicker::make('background_color'),
+                        Forms\Components\Toggle::make('is_tag'),
+                        Forms\Components\Select::make('parent_id')->searchable()->relationship('parent', 'title'),
+                        Forms\Components\Hidden::make('user_id')->dehydrateStateUsing(fn ($state) => auth()->id())
+                    ]),
+                    Forms\Components\Tabs\Tab::make('SEO')->schema([
+                        SEO::make(),
+                    ])
+                ])
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table

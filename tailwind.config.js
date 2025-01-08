@@ -11,7 +11,8 @@ export default {
         './resources/views/**/*.blade.php',
         './vendor/awcodes/filament-curator/resources/**/*.blade.php',
         './vendor/awcodes/filament-tiptap-editor/resources/**/*.blade.php',
-        "./vendor/robsontenorio/mary/src/View/Components/**/*.php"
+        "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
+        './vendor/guava/calendar/resources/**/*.blade.php',
     ],
 
     theme: {

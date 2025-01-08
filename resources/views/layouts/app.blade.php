@@ -5,7 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+
+        @if (Route::currentRouteName() === 'article.show')
+            @php(print_r(seo()->for(Route::current()->parameter('article'))))
+            {!! seo() !!}
+        @elseif(Route::currentRouteName() === 'category.show')
+            {!! seo()->for(Route::current()->parameter('category')) !!}
+        @else
+            <title>{{ config('app.name', 'Laravel') }}</title>
+        @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

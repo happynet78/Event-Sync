@@ -17,9 +17,11 @@ use Filament\Tables;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use FilamentTiptapEditor\Enums\TiptapOutput;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use RalphJSmit\Filament\SEO\SEO;
 
 class ArticleResource extends Resource
 {
@@ -32,30 +34,44 @@ class ArticleResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required(),
-                Slug::make('slug')->required(),
-                TiptapEditor::make('content')->required(),
-                CuratorPicker::make('media_id'),
-                Forms\Components\Select::make('category')->multiple()->preload()->relationship('categories', 'title')->searchable(),
-                Forms\Components\Hidden::make('user_id')->dehydrateStateUsing(fn ($state) => auth()->id()),
-                Forms\Components\Select::make('status')->options([
-                    'Draft' => 'Draft',
-                    'Published' => 'Published',
-                ]),
-            ]);
+                Forms\Components\Tabs::make()->schema([
+                    Forms\Components\Tabs\Tab::make('content')->schema([
+                        TextInput::make('title')->required(),
+                        Slug::make('slug')->required(),
+                        TiptapEditor::make('content')
+                            ->output(TiptapOutput::Json)
+                            ->required(),
+                        CuratorPicker::make('media_id'),
+                        Forms\Components\Select::make('category')->multiple()->preload()->relationship('categories', 'title')->searchable(),
+                        Forms\Components\Hidden::make('user_id')->dehydrateStateUsing(fn ($state) => auth()->id()),
+                        Forms\Components\Select::make('status')->options(ArticleStatus::options()),
+                    ]),
+                    Forms\Components\Tabs\Tab::make('SEO')->schema([
+                        SEO::make(),
+                    ]),
+                    Forms\Components\Tabs\Tab::make('Media')->schema([
+                        CuratorPicker::make('media_id'),
+                    ])
+                ])
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                CuratorColumn::make('media_id')->size(40),
-                TextColumn::make('title')->searchable()->sortable(),
-                TextColumn::make('slug')->searchable()->sortable(),
-                SelectColumn::make('status')->options([
-                    'Draft' => 'Draft',
-                    'Published' => 'Published',
-                ])->searchable(),
+                CuratorColumn::make('media_id')
+                    ->label('Thumbnail')
+                    ->size(40),
+                Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('slug')->searchable()->sortable(),
+                Tables\Columns\SelectColumn::make('status')
+                    ->sortable()
+                    ->options(ArticleStatus::options()),
+                Tables\Columns\TextColumn::make('categories.title')
+                    ->sortable()
+                    ->badge()
+                    ->searchable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('categories')->multiple()->searchable()->relationship('categories', 'title'),
