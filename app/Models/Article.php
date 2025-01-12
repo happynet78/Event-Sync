@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-use App\Enum\ArticleStatus;
+use App\Enums\ArticleStatus;
+use App\Models\Scopes\IsPublishedScope;
 use Awcodes\Curator\Models\Media;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,12 +18,13 @@ use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use WireComments\Traits\Commentable;
 
-class Article extends Model
+class Article extends Model implements Viewable
 {
     use HasFactory;
     use Commentable;
     use SoftDeletes;
     use HasSEO;
+    use InteractsWithViews;
 
     protected $fillable = [
         'title',
@@ -32,6 +37,11 @@ class Article extends Model
         'status' => ArticleStatus::class,
         'content' => 'array'
     ];
+
+    public function scopeIsPublished(Builder $builder): Builder
+    {
+        return $builder->where('status', ArticleStatus::PUBLISHED);
+    }
 
     public function image(): BelongsTo
     {
@@ -52,7 +62,7 @@ class Article extends Model
     {
         return new SEOData(
             title: $this->title,
-            description: tiptap_converter()->asText(Str::limit($this->content, 160)),
+            description: Str::limit(tiptap_converter()->asText($this->content, 100)),
             image: $this->image->path,
         );
     }

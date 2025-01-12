@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Enum;
+namespace App\Enums;
 
 use Illuminate\Support\Str;
 
-enum ArticleStatus: string
+enum ProductStatus: string
 {
     case DRAFT = 'Draft';
     case PUBLISHED = 'Published';
+    case ARCHIVED = 'Archived';
+    case DISCONTINUED = 'Discontinued';
 
     public static function values(): array
     {
@@ -16,6 +18,8 @@ enum ArticleStatus: string
 
     public static function options(): array
     {
-        return collect(self::cases())->mapWithKeys(fn ($case) => [$case->value => Str::title($case->name)])->all();
+        return collect(self::cases())
+            ->mapWithKeys(fn ($case) => [$case->value => Str::title($case->name)])
+            ->all();
     }
 }

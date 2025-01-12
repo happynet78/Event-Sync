@@ -8,6 +8,7 @@
         <a href="{{ route('home') }}" wire:navigate>
             {{ config('app.name') }}
         </a>
+
         <!-- <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -23,18 +24,16 @@
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-            <li>
-                <a href="{{ route('home') }}" wire:navigate class="p-2">
-                    <x-mary-icon name="fas.home" />
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <x-mary-icon name="fas.newspaper" />
-                    Articles
-                </a>
-            </li>
+            @foreach ($menu->menuItems as $item)
+                <li>
+                    <a href="{{ $item->url }}" wire:navigate>
+                        @if ($item->icon)
+                            <x-mary-icon name="{{ $item->icon }}" />
+                        @endif
+                        {{ $item->title }}
+                    </a>
+                </li>
+            @endforeach
         </ul>
     </div>
     <div class="navbar-end space-x-2">
@@ -65,16 +64,13 @@
                 </div>
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                <li>
-                    <a wire:navigate href="{{ route('profile.show') }}">
-                        Profile
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin">
-                        Admin Panel
-                    </a>
-                </li>
+                @foreach ($dropdown->menuItems as $item)
+                    <li>
+                        <a href="{{ $item->url }}" {{ $item->use_navigate ? 'wire:navigate' : '' }}>
+                            {{ $item->title }}
+                        </a>
+                    </li>
+                @endforeach
                 <li>
                     <form method="POST" action="{{ route('logout') }}" x-data>
                         @csrf
@@ -89,9 +85,10 @@
     </div>
 
     <x-mary-drawer wire:model="responsiveMenu" class="w-11/12 lg:w-1/3">
-        <x-mary-menu class="p-0 w-0">
-            <x-mary-menu-item title="Home" link="#" icon="fas.home" />
-            <x-mary-menu-item title="Articles" link="#" icon="fas.newspaper" />
+        <x-mary-menu class="p-0 m-0">
+            @foreach ($menu->menuItems as $item)
+                <x-mary-menu-item title="{{ $item->title }}" link="{{ $item->url }}" icon="{{ $item->icon }}" />
+            @endforeach
         </x-mary-menu>
     </x-mary-drawer>
 </div>

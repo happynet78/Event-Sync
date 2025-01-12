@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Enum\ArticleStatus;
+use App\Enums\ArticleStatus;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Forms\Components\Slug;

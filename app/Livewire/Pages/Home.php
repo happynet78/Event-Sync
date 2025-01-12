@@ -12,7 +12,7 @@ class Home extends Component
 
     public function mount(): void
     {
-        $this->articles = Article::limit(8)->get();
+        $this->articles = Article::limit(8)->isPublished()->get();
     }
     #[Layout('layouts.app')]
     public function render()

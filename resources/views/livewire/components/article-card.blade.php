@@ -12,7 +12,7 @@
             </h3>
             @if ($article->content)
                 <p class="mt-5 text-gray-600">
-                    {!! Str::limit(tiptap_converter()->asText($article?->content, 100)) !!}
+                    {!! Str::limit(tiptap_converter()->asHTML($article?->content, 100)) !!}
                 </p>
             @endif
         </div>

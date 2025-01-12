@@ -13,6 +13,7 @@ export default {
         './vendor/awcodes/filament-tiptap-editor/resources/**/*.blade.php',
         "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
         './vendor/guava/calendar/resources/**/*.blade.php',
+        './vendor/codewithdennis/filament-price-filter/resources/**/*.blade.php',
     ],
 
     theme: {

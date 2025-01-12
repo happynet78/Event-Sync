@@ -54,11 +54,21 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                CuratorColumn::make('media_id')->label('Image')->size(40),
-                Tables\Columns\TextColumn::make('title')->searchable(),
-                Tables\Columns\TextColumn::make('slug')->searchable(),
-                Tables\Columns\ColorColumn::make('text_color')->searchable(),
-                Tables\Columns\ColorColumn::make('background_color')->searchable(),
+                CuratorColumn::make('media_id')
+                    ->label('Image')
+                    ->size(40),
+                Tables\Columns\TextColumn::make('title')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('slug')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\ColorColumn::make('text_color')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\ColorColumn::make('background_color')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Filament\Tiptap\Carousel;
 use App\Filament\Tiptap\Stats;
+use App\Models\User;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
             $component
                 ->blocks([
                     Stats::class,
+                    Carousel::class,
                 ]);
         });
     }
@@ -28,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(\Ramnzys\FilamentEmailLog\Models\Email::class, \App\Policies\EmailPolicy::class);
+        Cashier::useCustomerModel(User::class);
     }
 }

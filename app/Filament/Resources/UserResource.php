@@ -6,6 +6,8 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,13 +25,19 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('email'),
-                Forms\Components\Select::make('roles')
+                TextInput::make('name'),
+                TextInput::make('email'),
+                Select::make('roles')
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
-                    ->searchable()
+                    ->searchable(),
+                TextInput::make('password')
+                    ->password()
+                    ->revealable(),
+                TextInput::make('password-confirmation')
+                    ->password()
+                    ->revealable()
             ]);
     }
 
@@ -43,7 +51,7 @@ class UserResource extends Resource
                     ->copyable()
                     ->copyMessage('Email copied to clipboard'),
                 Tables\Columns\TextColumn::make('roles.name'),
-                Tables\Columns\IconColumn::make('email_verified_at')
+                Tables\Columns\IconColumn::make('is_email_verified')
                     ->label('Email verified at')
                     ->icon(fn ($state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-exclamation-circle')
                     ->color(fn ($state): string => $state ? 'success' : 'danger')

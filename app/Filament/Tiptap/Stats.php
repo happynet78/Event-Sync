@@ -2,7 +2,6 @@
 
 namespace App\Filament\Tiptap;
 
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use FilamentTiptapEditor\TiptapBlock;
 

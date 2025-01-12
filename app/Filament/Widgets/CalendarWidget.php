@@ -2,9 +2,20 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\Widget;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Filament\Widgets\TableWidget as BaseWidget;
 
-class CalendarWidget extends Widget
+class CalendarWidget extends BaseWidget
 {
-    protected static string $view = 'filament.widgets.calendar-widget';
+    public function table(Table $table): Table
+    {
+        return $table
+            ->query(
+                // ...
+            )
+            ->columns([
+                // ...
+            ]);
+    }
 }
