@@ -14,6 +14,7 @@ export default {
         "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
         './vendor/guava/calendar/resources/**/*.blade.php',
         './vendor/codewithdennis/filament-price-filter/resources/**/*.blade.php',
+        './vendor/bezhansalleh/filament-language-switch/resources/views/language-switch.blade.php',
     ],
 
     theme: {

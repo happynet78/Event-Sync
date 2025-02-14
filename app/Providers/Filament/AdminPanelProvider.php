@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use Awcodes\Curator\CuratorPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Datlechin\FilamentMenuBuilder\FilamentMenuBuilderPlugin;
 use Filament\Forms\Components\TextInput;
@@ -26,6 +27,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use pxlrbt\FilamentSpotlight\SpotlightPlugin;
 use STS\FilamentOpcache\FilamentOpcachePlugin;
+use TomatoPHP\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
 use Visualbuilder\EmailTemplates\EmailTemplatesPlugin;
 use Z3d0X\FilamentFabricator\FilamentFabricatorPlugin;
 
@@ -45,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
                 'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl())
             ])
             ->plugins([
-                \Awcodes\Curator\CuratorPlugin::make()
+                CuratorPlugin::make()
                     ->label('Media')
                     ->pluralLabel('Media')
                     ->navigationIcon('heroicon-o-photo')
@@ -71,6 +73,7 @@ class AdminPanelProvider extends PanelProvider
                         TextInput::make('icon')
                     ]),
                 EmailTemplatesPlugin::make(),
+                FilamentLanguageSwitcherPlugin::make()
             ])
             ->colors([
                 'primary' => Color::Amber,

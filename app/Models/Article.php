@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use WireComments\Traits\Commentable;
@@ -24,6 +25,7 @@ class Article extends Model implements Viewable
     use Commentable;
     use SoftDeletes;
     use HasSEO;
+    use Searchable;
     use InteractsWithViews;
 
     protected $fillable = [

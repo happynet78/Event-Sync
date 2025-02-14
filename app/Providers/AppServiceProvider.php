@@ -9,6 +9,7 @@ use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
+use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +34,16 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(\Ramnzys\FilamentEmailLog\Models\Email::class, \App\Policies\EmailPolicy::class);
         Cashier::useCustomerModel(User::class);
+        LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+            $switch
+                ->displayLocale('ko')
+                ->visible(outsidePanels: true)
+                ->outsidePanelRoutes([
+                    'profile',
+                    'home',
+                    // Additional custom routes where the switcher should be visible outside panels
+                ])
+                ->locales(['en','ko']); // also accepts a closure
+        });
     }
 }

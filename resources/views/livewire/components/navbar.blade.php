@@ -43,7 +43,7 @@
             <option value="ko">한국어</option>
         </select>
         <div class="form-control me-2">
-            <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+            <x-mary-button label="Search" @click.stop="$dispatch('mary-search-open')" />
         </div>
         <div class="dropdown dropdown-end">
         @guest

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
@@ -16,6 +17,7 @@ class Category extends Model
 {
     use HasFactory;
     use hasSEO;
+    use Searchable;
 
     protected $fillable = [
         'title',
@@ -59,6 +61,14 @@ class Category extends Model
     public function articles(): BelongsToMany
     {
         return $this->belongsToMany(Article::class, 'article_category');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'category_product');
     }
 
     /**

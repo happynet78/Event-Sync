@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 trait HandleTimezones
 {
@@ -12,7 +13,8 @@ trait HandleTimezones
      *
      * @return response()
      */
-    public function getXCreateAtAttribute($value) {
+    public function getXCreateAtAttribute($value): Response
+    {
         return $this->convertTimeZoneToUserTimezone($value);
     }
 
@@ -21,7 +23,8 @@ trait HandleTimezones
      *
      * @return response()
      */
-    protected function convertTimeZoneToUserTimezone($value) {
+    protected function convertTimeZoneToUserTimezone($value): response
+    {
         $timezone = Auth::check() && Auth::user()->timezone ? Auth::user()->timezone : config('app.timezone');
         return Carbon::parse($value)->timezone($timezone)->format("Y-m-d H:i:s");
     }
