@@ -12,9 +12,7 @@ class TagComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public Category $category)
-    {
-    }
+    public function __construct(public Category $category) {}
 
     /**
      * Get the view / contents that represent the component.

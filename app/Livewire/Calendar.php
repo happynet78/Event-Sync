@@ -9,18 +9,21 @@ class Calendar extends Component
 {
     public $date;
 
-    public function mount($date = null) {
+    public function mount($date = null)
+    {
         $this->date = Carbon::today();
-        if($date) {
+        if ($date) {
             $this->date = Carbon::parse($date);
         }
     }
 
-    public function previousMonth() {
+    public function previousMonth()
+    {
         $this->date = $this->date->subMonth();
     }
 
-    public function nextMonth() {
+    public function nextMonth()
+    {
         $this->date = $this->date->addMonth();
     }
 

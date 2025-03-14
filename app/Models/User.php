@@ -15,18 +15,17 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use \TomatoPHP\FilamentLanguageSwitcher\Traits\InteractsWithLanguages;
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
+    use Billable;
     use HasApiTokens;
     use HasFactory;
+    use HasPanelShield;
     use HasProfilePhoto;
+    use HasRoles;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;
-    use HasPanelShield;
-    use Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -73,10 +72,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         ];
     }
 
-    /**
-     * @param Panel $panel
-     * @return bool
-     */
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

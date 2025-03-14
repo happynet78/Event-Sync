@@ -1,6 +1,6 @@
 <?php
 
-    return [
-        'dashboard' => 'Dashboard',
-        'dashboard_message' => 'You\'re logged in!',
-    ];
+return [
+    'dashboard' => 'Dashboard',
+    'dashboard_message' => 'You\'re logged in!',
+];

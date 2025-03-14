@@ -38,10 +38,13 @@
     </div>
     <div class="navbar-end space-x-2">
         @php($languages = ['en' => 'English', 'ko' => '한국어'])
-        <select class="select select-warning w-24 max-w-xs" wire:model.live="lang" aria-label="Language">
-            <option value="en">English</option>
-            <option value="ko">한국어</option>
-        </select>
+        <form id="langForm" method="post" action="{{ url('change-lang') }}">
+            @csrf
+            <select class="select select-warning w-24 max-w-xs" wire:model.live="lang" aria-label="Language" onchange="this.form.submit();">
+                <option value="en">English</option>
+                <option value="ko">한국어</option>
+            </select>
+        </form>
         <div class="form-control me-2">
             <x-mary-button label="Search" @click.stop="$dispatch('mary-search-open')" />
         </div>

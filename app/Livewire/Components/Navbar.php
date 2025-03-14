@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Components;
 
+use Datlechin\FilamentMenuBuilder\Models\Menu;
 use Illuminate\View\View;
 use Livewire\Component;
-use Datlechin\FilamentMenuBuilder\Models\Menu;
 
 class Navbar extends Component
 {
@@ -12,10 +12,10 @@ class Navbar extends Component
 
     public function toggleDrawer(): void
     {
-        $this->responsiveMenu = !$this->responsiveMenu;
+        $this->responsiveMenu = ! $this->responsiveMenu;
     }
 
-    public function render():View
+    public function render(): View
     {
         return view('livewire.components.navbar', [
             'menu' => Menu::location('header'),

@@ -8,8 +8,8 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Str;
 
 final class Spotlight
 {

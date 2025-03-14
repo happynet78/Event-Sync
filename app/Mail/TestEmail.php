@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -12,9 +11,10 @@ use Visualbuilder\EmailTemplates\Traits\BuildGenericEmail;
 
 class TestEmail extends Mailable
 {
-    use Queueable, SerializesModels, BuildGenericEmail;
+    use BuildGenericEmail, Queueable, SerializesModels;
 
-    public string $template = 'test-email';  //Change this to the key of the email template content to load
+    public string $template = 'test-email';  // Change this to the key of the email template content to load
+
     public string $sendTo;
 
     /**

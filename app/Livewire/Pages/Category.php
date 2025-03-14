@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Pages;
 
+use App\Models\Category as CategoryModel;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use App\Models\Category as CategoryModel;
 
 class Category extends Component
 {

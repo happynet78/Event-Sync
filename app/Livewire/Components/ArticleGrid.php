@@ -2,20 +2,24 @@
 
 namespace App\Livewire\Components;
 
+use App\Models\Article as ArticleModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Article as ArticleModel;
 
 class ArticleGrid extends Component
 {
     use WithPagination;
 
     public Collection $articles;
+
     public int $limit;
+
     public $category;
+
     public $sort_by;
+
     public bool $show_load_more = false;
 
     public function mount(): void
@@ -28,9 +32,6 @@ class ArticleGrid extends Component
         return view('livewire.components.article-grid');
     }
 
-    /**
-     * @return void
-     */
     public function loadMore(): void
     {
         $offset = 0;
@@ -50,24 +51,18 @@ class ArticleGrid extends Component
         $this->show_load_more = $newArticles->count() >= $this->limit;
     }
 
-    /**
-     * @return Builder
-     */
-    private  function getBaseQuery(): Builder
+    private function getBaseQuery(): Builder
     {
         return ArticleModel::with('categories')
             ->whereHas('categories', function ($query) {
-                $query->whereIn('categories.id',  (array) $this->category);
+                $query->whereIn('categories.id', (array) $this->category);
             });
     }
 
-    /**
-     * @param int $offset
-     * @return Collection
-     */
     private function getArticlesByViews(int $offset = 0): Collection
     {
-        $cacheKey = 'articles_by_views_' . implode('_', (array) $this->category) . '_offset_' . $offset;
+        $cacheKey = 'articles_by_views_'.implode('_', (array) $this->category).'_offset_'.$offset;
+
         return cache()->remember($cacheKey, now()->addMinutes(10), function () use ($offset) {
             return $this->getBaseQuery()
                 ->orderByViews() // Custom sorting by views
@@ -77,13 +72,9 @@ class ArticleGrid extends Component
         });
     }
 
-    /**
-     * @param int $offset
-     * @return Collection
-     */
     private function getArticlesBySortOrder(int $offset = 0): Collection
     {
-        $cacheKey = 'articles_by_sort_' . implode('_', (array) $this->category) . '_' . $this->sort_by . '_offset_' . $offset;
+        $cacheKey = 'articles_by_sort_'.implode('_', (array) $this->category).'_'.$this->sort_by.'_offset_'.$offset;
 
         return cache()->remember($cacheKey, now()->addMinutes(10), function () use ($offset) {
             $validColumns = ['created_at', 'updated_at'];

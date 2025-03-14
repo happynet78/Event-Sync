@@ -18,11 +18,11 @@ class AuthCallbackController extends Controller
 
         auth()->login(
             $user = app(CreateUserFactory::class)
-                    ->forService($service)
-                    ->create($user)
+                ->forService($service)
+                ->create($user)
         );
 
-        if($user->wasRecentlyCreated) {
+        if ($user->wasRecentlyCreated) {
             event(new Registered($user));
         }
 

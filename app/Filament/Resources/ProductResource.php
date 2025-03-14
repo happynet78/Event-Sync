@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProductVariantType;
 use App\Enums\ProductStatus;
 use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Forms\Components\Slug;
 use App\Models\Product;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
@@ -17,10 +17,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use FilamentTiptapEditor\Enums\TiptapOutput;
 use FilamentTiptapEditor\TiptapEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Number;
 use RalphJSmit\Filament\SEO\SEO;
+use Saade\FilamentAdjacencyList\Forms\Components\AdjacencyList;
 
 class ProductResource extends Resource
 {
@@ -44,7 +43,7 @@ class ProductResource extends Resource
                             ->preload()
                             ->relationship('categories', 'title')
                             ->searchable(),
-                        Forms\Components\Hidden::make('user_id')->dehydrateStateUsing(fn($state) => auth()->id()),
+                        Forms\Components\Hidden::make('user_id')->dehydrateStateUsing(fn ($state) => auth()->id()),
                         Forms\Components\Select::make('status')
                             ->options(ProductStatus::options()),
                         CuratorPicker::make('images')
@@ -58,7 +57,25 @@ class ProductResource extends Resource
                     Forms\Components\Tabs\Tab::make('SEO')->schema([
                         SEO::make(),
                     ]),
-                ])
+                    Forms\Components\Tabs\Tab::make('Variants')->schema([
+                        AdjacencyList::make('variants')
+                            ->form([
+                                Forms\Components\TextInput::make('label')
+                                    ->required(),
+                                Forms\Components\Select::make('type')
+                                    ->searchable()
+                                    ->options(ProductVariantType::options())
+                                    ->required(),
+                                Forms\Components\TextInput::make('stock')
+                                    ->numeric()
+                                    ->required(),
+                                Forms\Components\ColorPicker::make('color'),
+                                CuratorPicker::make('images')
+                                    ->multiple()
+                                    ->orderColumn('position')
+                            ]),
+                    ]),
+                ]),
             ])->columns(1);
     }
 
@@ -70,7 +87,7 @@ class ProductResource extends Resource
                 TextColumn::make('slug'),
                 TextColumn::make('price')
                     ->numeric()
-                    ->formatStateUsing(fn($state) => Number::currency(number_format($state / 100, 3))),
+                    ->formatStateUsing(fn ($state) => Number::currency(number_format($state / 100, 3))),
                 TextColumn::make('stock')->numeric(),
             ])
             ->filters([

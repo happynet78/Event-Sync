@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Pages;
 
+use App\Models\Article as ArticleModel;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use App\Models\Article as ArticleModel;
 
 class Article extends Component
 {

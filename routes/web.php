@@ -11,6 +11,9 @@ use App\livewire\Pages\Page;
 use App\Livewire\Pages\Product;
 use Illuminate\Support\Facades\Route;
 
+
+Route::post('change-lang', [LanguageController::class, 'change']);
+
 Route::get('/', Home::class)->name('home');
 Route::get('/articles/{article:slug}', Article::class)->name('article.show');
 Route::get('/products/{product:slug}', Product::class)->name('product.show');
@@ -26,12 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('change', [LanguageController::class, 'change'])->name('lang.change');
+//    Route::get('change', [LanguageController::class, 'change'])->name('lang.change');
 });
 
 require __DIR__.'/auth.php';
 
-Route::middleware('guest')->group(function() {
+Route::middleware('guest')->group(function () {
     Route::get('/auth/redirect/{service}', AuthRedirectController::class)->name('auth.redirect');
     Route::get('/auth/callback/{service}', AuthCallbackController::class)->name('auth.callback');
 });

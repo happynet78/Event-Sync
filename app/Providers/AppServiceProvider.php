@@ -5,11 +5,11 @@ namespace App\Providers;
 use App\Filament\Tiptap\Carousel;
 use App\Filament\Tiptap\Stats;
 use App\Models\User;
+use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
-use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
                     Carousel::class,
                 ]);
         });
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
     }
 
     /**
@@ -43,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
                     'home',
                     // Additional custom routes where the switcher should be visible outside panels
                 ])
-                ->locales(['en','ko']); // also accepts a closure
+                ->locales(['en', 'ko']); // also accepts a closure
         });
     }
 }

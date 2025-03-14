@@ -26,6 +26,7 @@ trait HandleTimezones
     protected function convertTimeZoneToUserTimezone($value): response
     {
         $timezone = Auth::check() && Auth::user()->timezone ? Auth::user()->timezone : config('app.timezone');
-        return Carbon::parse($value)->timezone($timezone)->format("Y-m-d H:i:s");
+
+        return Carbon::parse($value)->timezone($timezone)->format('Y-m-d H:i:s');
     }
 }

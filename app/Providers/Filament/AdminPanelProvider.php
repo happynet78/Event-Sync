@@ -44,7 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->profile()
             ->userMenuItems([
-                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl())
+                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl()),
             ])
             ->plugins([
                 CuratorPlugin::make()
@@ -70,10 +70,10 @@ class AdminPanelProvider extends PanelProvider
                     ->addMenuItemFields([
                         Toggle::make('is_admin'),
                         Toggle::make('use_navigate'),
-                        TextInput::make('icon')
+                        TextInput::make('icon'),
                     ]),
                 EmailTemplatesPlugin::make(),
-                FilamentLanguageSwitcherPlugin::make()
+                FilamentLanguageSwitcherPlugin::make(),
             ])
             ->colors([
                 'primary' => Color::Amber,
@@ -98,7 +98,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \Hasnayeen\Themes\Http\Middleware\SetTheme::class
+                \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

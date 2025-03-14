@@ -20,8 +20,8 @@ class Product extends Model implements Viewable
 {
     use HasFactory;
     use HasSEO;
-    use Searchable;
     use InteractsWithViews;
+    use Searchable;
 
     protected $fillable = [
         'title',
@@ -30,12 +30,14 @@ class Product extends Model implements Viewable
         'content',
         'status',
         'stock',
-        'price'
+        'variants',
+        'price',
     ];
 
     protected $casts = [
         'status' => ProductStatus::class,
         'content' => 'array',
+        'variants' => 'array',
     ];
 
     public function user(): BelongsTo
