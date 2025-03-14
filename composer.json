@@ -32,6 +32,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0",
         "livewire/volt": "^1.6",
+        "lukepolo/laracart": "^2.4",
         "matildevoldsen/wire-comments": "^0.5.1",
         "matildevoldsen/wire-content": "@dev",
         "meilisearch/meilisearch-php": "^1.12",

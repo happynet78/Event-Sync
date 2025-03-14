@@ -2,27 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\OrderStatus;
-use App\Filament\Resources\OrderResource\Pages;
-use App\Models\Order;
+use App\Filament\Resources\CountryResource\Pages;
+use App\Filament\Resources\CountryResource\RelationManagers;
+use App\Models\Country;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\SelectColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class OrderResource extends Resource
+class CountryResource extends Resource
 {
-    protected static ?string $model = Order::class;
+    protected static ?string $model = Country::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('code')->required(),
             ]);
     }
 
@@ -30,13 +32,12 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('order_id'),
-                TextColumn::make('total'),
-                TextColumn::make('texes'),
-                TextColumn::make('discount'),
-                SelectColumn::make('status')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->options(OrderStatus::options()),
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -61,9 +62,9 @@ class OrderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrders::route('/'),
-            'create' => Pages\CreateOrder::route('/create'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
+            'index' => Pages\ListCountries::route('/'),
+            'create' => Pages\CreateCountry::route('/create'),
+            'edit' => Pages\EditCountry::route('/{record}/edit'),
         ];
     }
 }

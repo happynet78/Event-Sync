@@ -38,17 +38,17 @@
     </div>
     <div class="navbar-end space-x-2">
         @php($languages = ['en' => 'English', 'ko' => '한국어'])
-        <form id="langForm" method="post" action="{{ url('change-lang') }}">
-            @csrf
-            <select class="select select-warning w-24 max-w-xs" wire:model.live="lang" aria-label="Language" onchange="this.form.submit();">
-                <option value="en">English</option>
-                <option value="ko">한국어</option>
-            </select>
-        </form>
-        <div class="form-control me-2">
-            <x-mary-button label="Search" @click.stop="$dispatch('mary-search-open')" />
-        </div>
-        <div class="dropdown dropdown-end">
+{{--        <form id="langForm" method="post" action="{{ url('change-lang') }}">--}}
+{{--            @csrf--}}
+{{--            <select class="select select-warning w-24 max-w-xs" wire:model.live="lang" aria-label="Language" onchange="this.form.submit();">--}}
+{{--                <option value="en">English</option>--}}
+{{--                <option value="ko">한국어</option>--}}
+{{--            </select>--}}
+{{--        </form>--}}
+{{--        <div class="form-control me-2">--}}
+{{--            <x-mary-button label="Search" @click.stop="$dispatch('mary-search-open')" />--}}
+{{--        </div>--}}
+
         @guest
             <a href="{{ route('login') }}" wire:navigate class="btn btn-primary">
                 Login
@@ -59,32 +59,39 @@
             </a>
         @endguest
         @auth
-            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                <div class="w-10 rounded-full">
-                    <img
-                        alt="{{ auth()->user()->name }} profile picture"
-                        src="{{ auth()->user()->profile_photo_url }}"/>
+            <livewire:components.basket />
+
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                            alt="{{ auth()->user()->name }} profile picture"
+                            src="{{ auth()->user()->profile_photo_url }}"/>
+                    </div>
                 </div>
-            </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                @foreach ($dropdown->menuItems as $item)
+                <ul
+                    tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                    @foreach ($dropdown->menuItems as $item)
+                        <li>
+                            <a href="{{ $item->url }}" {{ $item->use_navigate ? 'wire:navigate' : '' }}>
+                                {{ $item->title }}
+                            </a>
+                        </li>
+                    @endforeach
+
                     <li>
-                        <a href="{{ $item->url }}" {{ $item->use_navigate ? 'wire:navigate' : '' }}>
-                            {{ $item->title }}
-                        </a>
+                        <form method="POST" action="{{ route('logout') }}" x-data>
+                            @csrf
+                            <a href="{{ route('logout') }}"
+                               @click.prevent="$root.submit()">
+                                Logout
+                            </a>
+                        </form>
                     </li>
-                @endforeach
-                <li>
-                    <form method="POST" action="{{ route('logout') }}" x-data>
-                        @csrf
-                        <a href="{{ route('logout') }}" @click.prevent="$root.submit()">
-                            Logout
-                        </a>
-                    </form>
-                </li>
-            </ul>
+                </ul>
+            </div>
         @endauth
-        </div>
     </div>
 
     <x-mary-drawer wire:model="responsiveMenu" class="w-11/12 lg:w-1/3">
