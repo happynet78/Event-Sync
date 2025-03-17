@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Models\Order;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -22,7 +24,13 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('email'),
+                TextInput::make('total'),
+                TextInput::make('texes'),
+                TextInput::make('discount'),
+                Select::make('status')
+                    ->searchable()
+                    ->options(OrderStatus::options()),
             ]);
     }
 
